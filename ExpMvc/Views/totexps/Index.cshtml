@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ExpMvc.Models.totexp>
+
+@{
+    ViewBag.Title = "View Total Expances";
+}
+<div class="row">
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Total Expances</h5>
+        </div>
+        <div class="card-body">
+
+            <div class="example-container">
+                <div class="example-content">
+                    <table class="table">
+
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Total Expance Id</th>
+                                <th scope="col">Total Expance Amount</th>
+                                <th scope="col">Edit | Delete</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.totexp1)
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("AddOrEdit","totexps", new{ id = item.id})" class="btn btn-outline-warning"><i class="material-icons" align="center">edit</i>Edit</a>
+                                       
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != ''){
+                alertify.success(successMessage);
+            }
+            });
+        
+    </script>
+}

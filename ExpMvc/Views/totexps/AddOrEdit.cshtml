@@ -1,0 +1,43 @@
+﻿@model ExpMvc.Models.totexp
+
+@{
+    ViewBag.Title = "Add Total Expance";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Add Total Expance</h5>
+
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            <div class="row mb-3">
+                @Html.HiddenFor(model => model.id)
+                <label for="totexplim" class="col-sm-2 col-form-label">Amount</label>
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.totexp1, new
+                           {
+                       htmlAttributes = new
+                               {
+                       @class = "form-control",
+                       @min = "1",
+                       @oninput = "validity.valid||(value='');",
+                       @name = "totexp",
+                       @placeholder = "Enter Total Expance"
+                               }
+                       })
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Total Expance</button>
+        }
+
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

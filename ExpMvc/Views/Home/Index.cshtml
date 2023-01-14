@@ -1,0 +1,152 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card widget widget-stats">
+            <div class="card-body">
+                <div class="widget-stats-container d-flex">
+                    <div class="widget-stats-icon widget-stats-icon-primary">
+                        <i class="material-icons-outlined">paid</i>
+                    </div>
+                    <div class="widget-stats-content flex-fill">
+                        <span class="widget-stats-title">Total Expance Limit</span>
+                        <span class="widget-stats-amount">
+                            @foreach (var totexp in ViewBag.totalexpances)
+                            {
+                                @totexp.totexp1
+                            }</span>
+                        <span class="widget-stats-info"></span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card widget widget-stats">
+            <div class="card-body">
+                <div class="widget-stats-container d-flex">
+                    <div class="widget-stats-icon widget-stats-icon-warning">
+                        <i class="material-icons-outlined">person</i>
+                    </div>
+                    <div class="widget-stats-content flex-fill">
+                        <span class="widget-stats-title">Tour Total Expance</span>
+                        <span class="widget-stats-amount">@ViewBag.kj</span>
+                        <span class="widget-stats-info"></span>
+                    </div>
+                   
+                </div>
+            </div>
+            <div>
+        </div>
+    </div>
+</div>
+ </div>
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Category</h5>
+            </div>
+            <div class="card-body">
+
+
+                <table class="table">
+
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Expance Limit</th>
+                            <th scope="col">select/Edit/Delete</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var cat in ViewBag.categories)
+                        {
+                            <tr>
+                                <td>@cat.id</td>
+                                <td>@cat.name </td>
+                                <td>@cat.explim</td>
+                                <td>
+                                    <a href="@Url.Action("AddOrEdit", "cats", new { id = cat.id })" class="btn btn-outline-warning"><i class="material-icons" align="center">edit</i></a>
+                                    <a onclick="Delete1(@cat.id)" , class="btn btn-outline-danger"><i class="material-icons" align="center">delete_outline</i></a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Expance Table</h5>
+            </div>
+            <div class="card-body">
+
+                <table class="table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Category Id</th>
+                            <th scope="col">Date Time</th>
+                            <th scope="col">Edit/Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var exp in ViewBag.expances)
+                        {
+                            <tr>
+                                <td>@exp.id</td>
+                                <td>@exp.title</td>
+                                <td>@exp.description</td>
+                                <td>@exp.category</td>
+                                <td>@exp.amount</td>
+                                <td>@exp.catid</td>
+                                <td>@exp.datetime</td>
+                                <td>
+                                    <a href="@Url.Action("AddOrEdit", "exps", new { id = exp.id })" class="btn btn-outline-warning"><i class="material-icons" align="center">edit</i></a>
+                                    <a onclick="Delete1(@exp.id)" , class="btn btn-outline-danger"><i class="material-icons" align="center">delete_outline</i></a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != ''){
+                alertify.success(successMessage);
+            }
+            });
+        function Delete(id) {
+            alertify.confirm('Category Delete Opration', 'Are You Sure To Delete This Category ? ', function () {
+                window.location.href = '@Url.Action("Delete","cats")/' + id;
+            }, null);
+        }
+
+         function Delete1(id) {
+            alertify.confirm('Expance Delete Opration', 'Are You Sure To Delete This Expance ? ', function () {
+                window.location.href = '@Url.Action("Delete","exps")/' + id;
+            }, null);
+        }
+    </script>
+}

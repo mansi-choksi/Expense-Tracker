@@ -1,0 +1,99 @@
+﻿@model ExpMvc.Models.exp
+
+@{
+    ViewBag.Title = "Add Expances";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Add Expances</h5>
+
+    </div>
+
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            <div class="row mb-3">
+                @Html.HiddenFor(model => model.id)
+                <label for="title" class="col-sm-2 col-form-label">Expance Title</label>
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.title, new
+                      {
+                          htmlAttributes = new
+                          {
+                              @class = "form-control",
+                              @name = "exptitle",
+                              @placeholder = "Enter Expance Title"
+                          }
+                      })
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="description" class="col-sm-2 col-form-label">Description</label>
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.description, new
+                      {
+                          htmlAttributes = new
+                          {
+                              @class = "form-control",
+                              @name = "expdescription",
+                              @placeholder = "Enter Expance Description"
+                          }
+                      })
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="category" class="col-sm-2 col-form-label">Category</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(model => model.category, new SelectList(ViewBag.data, "name", "name"), "Select your Category", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="Amount" class="col-sm-2 col-form-label">Amount</label>
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.amount, new
+                            {
+                        htmlAttributes = new
+                                {
+                        @class = "form-control",
+                        @min = "1",
+                        @oninput = "validity.valid||(value='');",
+                        @name = "expamount",
+                        @placeholder = "Enter Expance Amount"
+                                }
+                        })
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="categoryid" class="col-sm-2 col-form-label">Category Id</label>
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(model => model.catid, new SelectList(ViewBag.data, "id", "name", "id"), "Select your Category", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="datetime" class="col-sm-2 col-form-label">Date Time</label>
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.datetime, new
+                            {
+                        htmlAttributes = new
+                                {
+                        @class = "form-control",
+                        @name = "expdatetime",
+                        @placeholder = "Enter Expance Date Time"
+                                }
+                        })
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Expance</button>
+        }
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<ExpMvc.Models.cat>
+
+@{
+    ViewBag.Title = "View Category";
+}
+<div class="row">
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Category</h5>
+            <a href="@Url.Action("AddOrEdit","cats")" class="btn btn-success"><i class="material-icons" align="center">add</i>Add New</a>
+
+        </div>
+        <div class="card-body">
+
+            <div class="example-container">
+                <div class="example-content">
+                    <table class="table">
+
+                        <thead class="table-dark">
+                            <tr>
+
+                                <th scope="col">Category Id</th>
+                                <th scope="col">Category Name</th>
+                                <th scope="col"> Expance Limit</th>
+                                <th scope="col">Edit | Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td> @Html.DisplayFor(modelItem => item.id)</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.explim)
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("AddOrEdit","cats", new{ id = item.id})" class="btn btn-outline-warning"><i class="material-icons" align="center">edit</i>Edit</a>
+                                        <a onclick="Delete(@item.id)" class="btn btn-outline-danger"><i class="material-icons" align="center">delete_outline</i>Delete</a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != ''){
+                alertify.success(successMessage);
+            }
+            });
+        function Delete(id) {
+            alertify.confirm('Category Delete Opration', 'Are You Sure To Delete This Category ? ',function () {
+                window.location.href = '@Url.Action("Delete","cats")/' + id;
+            },null );
+        }
+    </script>
+}

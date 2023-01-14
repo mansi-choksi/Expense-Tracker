@@ -1,0 +1,60 @@
+﻿
+@model ExpMvc.Models.cat
+
+@{
+    ViewBag.Title = "Add Or Edit Category";
+}
+
+<h2>AddOrEdit</h2>
+
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Add Category</h5>
+    </div>
+
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            <div class="row mb-3">
+                @Html.HiddenFor(model => model.id)
+                <label for="catname" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.name, new
+               {
+                   htmlAttributes = new
+                   {
+                       @class = "form-control",
+                       @name = "catname",
+                       @placeholder = "Enter Category Name"
+                   }
+               })
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="catlim" class="col-sm-2 col-form-label">Limit</label>
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.explim, new
+                             {
+                                htmlAttributes = new
+                                 {
+                                    @class = "form-control",
+                                    @min = "1",
+                                    @oninput = "validity.valid||(value='');",
+                                    @name = "catexplim",
+                                    @placeholder = "Enter Category Expance Limit"
+                                 }
+                            })
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Category</button>
+        }
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

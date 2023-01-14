@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ExpDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="explim" Type="int" />
+        </EntityType>
+        <EntityType Name="exp">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="category" Type="varchar" MaxLength="50" />
+          <Property Name="amount" Type="int" />
+          <Property Name="catid" Type="int" />
+          <Property Name="datetime" Type="datetimeoffset" Precision="7" />
+        </EntityType>
+        <EntityType Name="totexp">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="totexp" Type="int" />
+        </EntityType>
+        <Association Name="FK__exp__catid__286302EC">
+          <End Role="cat" Type="Self.cat" Multiplicity="0..1" />
+          <End Role="exp" Type="Self.exp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="exp">
+              <PropertyRef Name="catid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExpDBModelStoreContainer">
+          <EntitySet Name="cat" EntityType="Self.cat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="exp" EntityType="Self.exp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="totexp" EntityType="Self.totexp" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__exp__catid__286302EC" Association="Self.FK__exp__catid__286302EC">
+            <End Role="cat" EntitySet="cat" />
+            <End Role="exp" EntitySet="exp" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ExpDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="explim" Type="Int32" />
+          <NavigationProperty Name="exps" Relationship="Self.FK__exp__catid__286302EC" FromRole="cat" ToRole="exp" />
+        </EntityType>
+        <EntityType Name="exp">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="amount" Type="Int32" />
+          <Property Name="catid" Type="Int32" />
+          <Property Name="datetime" Type="DateTimeOffset" Precision="7" />
+          <NavigationProperty Name="cat" Relationship="Self.FK__exp__catid__286302EC" FromRole="exp" ToRole="cat" />
+        </EntityType>
+        <EntityType Name="totexp">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="totexp1" Type="Int32" />
+        </EntityType>
+        <Association Name="FK__exp__catid__286302EC">
+          <End Role="cat" Type="Self.cat" Multiplicity="0..1" />
+          <End Role="exp" Type="Self.exp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cat">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="exp">
+              <PropertyRef Name="catid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExpDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cats" EntityType="Self.cat" />
+          <EntitySet Name="exps" EntityType="Self.exp" />
+          <EntitySet Name="totexps" EntityType="Self.totexp" />
+          <AssociationSet Name="FK__exp__catid__286302EC" Association="Self.FK__exp__catid__286302EC">
+            <End Role="cat" EntitySet="cats" />
+            <End Role="exp" EntitySet="exps" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ExpDBModelStoreContainer" CdmEntityContainer="ExpDBEntities">
+          <EntitySetMapping Name="cats">
+            <EntityTypeMapping TypeName="ExpDBModel.cat">
+              <MappingFragment StoreEntitySet="cat">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="explim" ColumnName="explim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="exps">
+            <EntityTypeMapping TypeName="ExpDBModel.exp">
+              <MappingFragment StoreEntitySet="exp">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="catid" ColumnName="catid" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="totexps">
+            <EntityTypeMapping TypeName="ExpDBModel.totexp">
+              <MappingFragment StoreEntitySet="totexp">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="totexp1" ColumnName="totexp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
